@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lamp-stack
+  namespace: demo-test
+  labels:
+    app: lamp-stack
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: lamp-stack
+  template:
+    metadata:
+      labels:
+        app: lamp-stack
+        app.kubernetes.io/name: lamp-stack
+    spec:
+      containers:
+      - image: dock1998/lamp_stack:v3
+        imagePullPolicy: "Always"
+        name: lamp-stack-cont
+        command: 
+          - /bin/bash
+          - -c 
+          - |
+            tail -f /dev/null
+        ports:
+          - name: http
+            containerPort: 80
+            hostPort: 8080
+
+

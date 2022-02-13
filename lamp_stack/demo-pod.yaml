@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: isb-pod
+  namespace: demo-test
+spec:
+  containers:
+  - image: dock1998/lamp_stack:v3
+    name: test
+    imagePullPolicy: "IfNotPresent"
+  

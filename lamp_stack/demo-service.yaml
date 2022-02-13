@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: lamp-stack-service
+  namespace: demo-test
+  labels:
+    app: lamp-stack
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+  selector:
+    app: lamp-stack
