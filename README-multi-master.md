@@ -32,24 +32,24 @@ We have 2 master nodes. Which means the user can connect to either of the 2 api-
 
 ```bash
     frontend fe-apiserver
-   bind 0.0.0.0:6443
-   mode tcp
-   option tcplog
-   default_backend be-apiserver
+        bind 0.0.0.0:6443
+        mode tcp
+        option tcplog
+        default_backend be-apiserver
 ```
 
-- Add the below lines to create a backend configuration for master1 and master2 nodes at port 6443. Note : 6443 is the default port of kube-apiserver:
+- Add the below lines to create a backend configuration for master1 and master2 nodes at port 6443. Note : 6443 is the default port of kube-apiserver.
 
 ```bash
     backend be-apiserver
-   mode tcp
-   option tcplog
-   option tcp-check
-   balance roundrobin
-   default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
+        mode tcp
+        option tcplog
+        option tcp-check
+        balance roundrobin
+        default-server inter 10s downinter 5s rise 2 fall 2 slowstart 60s maxconn 250 maxqueue 256 weight 100
 
-       server etcd-master1 10.138.0.15:6443 check
-       server etcd-master2 10.138.0.16:6443 check
+            server etcd-master1 10.138.0.15:6443 check
+            server etcd-master2 10.138.0.16:6443 check
 ```
 
 Here - etcd-master1 and etcd-master2 are the names of the master nodes and 10.138.0.15 and 10.138.0.16 are the corresponding internal IP addresses.
