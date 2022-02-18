@@ -3,7 +3,7 @@
 ## Three node cluster setup
 
 ### Prerequisites:
-1. Launch three EC2 instances, one EC2 instance with 2 cpus (t2.medium) and the other two t2.micro.
+1. Launch three EC2 instances, one EC2 instance with 2 cpus (t2.medium) and the other two EC2 instances with1 cpu (t2.micro).
 
 1. Enable inbound rules for all traffic in security groups for all the three instances.
 
@@ -40,6 +40,7 @@
 ### After the above commands are successfully run on all the worker nodes. Below steps can be followed to initialize the Kubernetes cluster.<br/><br/>
 ## <u>On Master Node</u>
 <br/><br/>
+
 ### Execute the below command on the master node: <br></br>
 ```bash
     # Replace MASTER_IP with the correct master node IP
@@ -48,12 +49,10 @@
 ```
 
 ## Troubleshooting tips
-
-    After executing the kubeadm init command if you get the error as 'The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp 127.0.0.1:10248: connect: connection refused'
-    then perform the below steps.
+After executing the kubeadm init command if you get the error as 'The HTTP call equal to 'curl -sSL http://localhost:10248/healthz' failed with error: Get "http://localhost:10248/healthz": dial tcp 127.0.0.1:10248: connect: connection refused' then perform the below steps.
 
 ### Configure docker's cgroup driver and execute the below commands:
-    There are chances that the kubeadm init command is going to fail saying the different cgroup drvers are being used in the kubelet (systemd) and docker (cgroupfs) service. To resolve that we will make sure that both the services are running with the same cgroup driver. It's recommended that we use systemd as cgroup driver for both of the services. To restart docker with systemd as cgroup driver, change the service file (/lib/systemd/system/docker.service) for docker to accept cgroup driver
+There are chances that the kubeadm init command is going to fail saying the different cgroup drvers are being used in the kubelet (systemd) and docker (cgroupfs) service. To resolve that we will make sure that both the services are running with the same cgroup driver. It's recommended that we use systemd as cgroup driver for both of the services. To restart docker with systemd as cgroup driver, change the service file (/lib/systemd/system/docker.service) for docker to accept cgroup driver.
 
 ``` bash
     # To undo the kubeadm init configuration
